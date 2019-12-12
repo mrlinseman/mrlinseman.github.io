@@ -20,70 +20,69 @@
 <script type='text/javascript' language='JavaScript1.1'>
 <!--
 	// Copyright (c) 2000-2008 eInstruction Corp.
-	var listMap = '0';
-	var qtypeMap = '7';
-	var ansMap = new Array(1);
-	var ptsMap = new Array(1);
-	ansMap[0] = 'p';
+	var listMap = '0000000000000000000000';
+	var qtypeMap = '7777777777777777777777';
+	var ansMap = new Array(22);
+	var ptsMap = new Array(22);
+	ansMap[0] = '71';
 	ptsMap[0] = 1;
-	function GradeIt(f)
+	ansMap[1] = '76';
+	ptsMap[1] = 1;
+	ansMap[2] = '76';
+	ptsMap[2] = 1;
+	ansMap[3] = '2935';
+	ptsMap[3] = 1;
+	ansMap[4] = '6a6875707160772556666c606b6660';
+	ptsMap[4] = 1;
+	ansMap[5] = '696b76';
+	ptsMap[5] = 1;
+	ansMap[6] = '31';
+	ptsMap[6] = 1;
+	ansMap[7] = '2539';
+	ptsMap[7] = 1;
+	ansMap[8] = '295a6a606c676a6c';
+	ptsMap[8] = 1;
+	ansMap[9] = '49';
+	ptsMap[9] = 1;
+	ansMap[10] = '3a3d';
+	ptsMap[10] = 1;
+	ansMap[11] = '34';
+	ptsMap[11] = 1;
+	ansMap[12] = '797f7868';
+	ptsMap[12] = 1;
+	ansMap[13] = '4b';
+	ptsMap[13] = 1;
+	ansMap[14] = '39';
+	ptsMap[14] = 1;
+	ansMap[15] = '24';
+	ptsMap[15] = 1;
+	ansMap[16] = '27';
+	ptsMap[16] = 1;
+	ansMap[17] = '2322';
+	ptsMap[17] = 1;
+	ansMap[18] = '415c5c3351525d49';
+	ptsMap[18] = 1;
+	ansMap[19] = '2525';
+	ptsMap[19] = 1;
+	ansMap[20] = '47';
+	ptsMap[20] = 1;
+	ansMap[21] = '2023';
+	ptsMap[21] = 1;
+	function HandleSubmit(f)
 	{
 		var	MAGIC = 840;
-		var	htmlUrl = window.location.href;
-		var	studentName;
 		var	totalCorrect = 0;
 		var	totalPossible = 0;
 		var	numCorrect = 0;
 		var	numPossible = 0;
 		var	numBlank = 0;
-		var	numSubjective = 0;
-		var	currentInstruction;
-		var	currentNarrative;
-		var	scorePercent;
 		var	index;
 		var	msg;
-		var	text;
 		var	i;
-		var	showFeedback = true;
-		var	showRef = true;
-		var	numQuestions = 1;
-		var	numInstructions = 1;
-		var	numNarratives = 0;
-		var	prefixText = new Array(1);
-		var	numberText = new Array(1);
-		var	questionText = new Array(1);
-		var	answerText = new Array(1);
-		var	responseText = new Array(1);
-		var	feedbackText = new Array(1);
-		var	refText = new Array(1);
-		var	narrativeIndex = new Array(0);
-		var	narrativeText = new Array(0);
-		var	instructionIndex = new Array(1);
-		var	instructionText = new Array(1);
-		var	listMap = '0';
-		var	titleString = 'String Methods Quiz';
-		var	styleText = new Array(11);
-		styleText[0] = '.spacer { line-height:.7em; }';
-		styleText[1] = '.title { font-size:13pt; font-weight:bold; font-family:"Times New Roman", "Times", serif; color:#000000; }';
-		styleText[2] = '.qnumber { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; text-align:right; }';
-		styleText[3] = '.choice { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }';
-		styleText[4] = '.default { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }';
-		styleText[5] = '.qinfo { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }';
-		styleText[6] = '.points { font-size:8pt; font-family:"Times New Roman", "Times", serif; color:#000000; }';
-		styleText[7] = 'TD.pad { padding: 0pt 4pt 0pt 4pt; }';
-		styleText[8] = '.font1 { font-family:"Times New Roman", "Times", serif }';
-		styleText[9] = '.font2 { font-family:"Courier New", "Courier", monospace }';
-		styleText[10] = '.font3 { font-family:"Times New Roman", "Times", serif }';
-		instructionText[0] = '<div class=\'default\'><b>Completion</b><span style=\'font-size:10pt\'><br></span><i>Complete each ' +
-'statement.</i></div>';
-		instructionIndex[0] = 0;
-		numberText[0] = '1.';
-		questionText[0] = '<div class=\'default\'>Given the declaration<br><span class=\'font2\'>String s = &quot;Computer ' +
-'Science&quot;;<br></span>find the value of each expression.<br><span ' +
-'class=\'font2\'><br>s.charAt(3)</span></div>';
-		answerText[0] = '<div class=\'default\'>p</div>';
-		feedbackText[0] = null;
-		refText[0] = '';
+
+		f.student_name.value = StripSpaces(f.student_name.value);
+		f.student_id.value = StripSpaces(f.student_id.value);
+		f.student_email.value = StripSpaces(f.student_email.value);
 
 		FixMR(f);
 		FixMTF(f);
@@ -102,6 +101,11 @@
 					++numBlank;
 				++index;
 			}
+		}
+
+		if (f.student_name.value == "") {
+			alert("Student name cannot be blank.");
+			return(false);
 		}
 
 		if (numBlank > 0) {
@@ -125,231 +129,48 @@
 					text = f.elements[i].value;
 
 				numPossible = ptsMap[index] * MAGIC;
-				if (ansMap[index] == "") {
-					scoreDetails[index] = "--";
-					prefixText[index] = "<img src='string_methods_quiz_files/nograde.gif' align='middle'>";
-					isCorrect = false;
-					++numSubjective;
-				} else {
+				if (ansMap[index] == "")
+					scoreDetails[index] = "?--";
+				else {
 					var scoreResult = ScoreAnswer(index, text, numPossible);
 					numCorrect = scoreResult.numPoints;
-					isCorrect = scoreResult.isCorrect;
-
-					scoreDetails[index] = (Math.round(numCorrect * 100 / MAGIC) / 100).toString();
-					prefixText[index] = BuildPrefixText(index, text, isCorrect);
-
+					scoreDetails[index] = (scoreResult.isCorrect) ? " " : "X";
+					scoreDetails[index] += (Math.round(numCorrect * 100 / MAGIC) / 100).toString();
 					totalCorrect += numCorrect;
 					totalPossible += numPossible;
 				}
 
-				if (showFeedback && feedbackText[index] != null && feedbackText[index].length > 0) {
-					if (qtypeMap.charAt(index) == "2")
-						feedbackIndex = text.charCodeAt(0) - 65;
-					else
-						feedbackIndex = (isCorrect) ? 0 : 1;
-					feedbackText[index] = GetFeedback(feedbackText[index], feedbackIndex);
-				}
-				responseText[index] = TranslateHtmlString(text);
-
-				scoreDetails[index] += " / " + (numPossible / MAGIC);
+				scoreDetails[index] += "/" + (numPossible / MAGIC);
 				++index;
 			}
 		}
 
-		numCorrect = Math.round(totalCorrect * 100 / MAGIC) / 100;
-		numPossible = Math.round(totalPossible * 100 / MAGIC) / 100;
+		f.score_details.value = scoreDetails.join("|");
+		f.score_correct.value = Math.round(totalCorrect * 100 / MAGIC) / 100;
+		f.score_possible.value = Math.round(totalPossible * 100 / MAGIC) / 100;
 		if (totalPossible > 0)
-			scorePercent = Math.round(100.0 * totalCorrect / totalPossible);
+			f.score_percent.value = Math.round(100.0 * totalCorrect / totalPossible);
 		else
-			scorePercent = 0;
+			f.score_percent.value = 0;
 
-		studentName = TranslateHtmlString(f.student_name.value);
-
-		document.writeln("<html>\n<head>");
-		document.writeln("<title>" + titleString + "</title>");
-		document.writeln("<style type='text/css'>");
-		for (i=0; i < styleText.length; ++i)
-			document.writeln("\t" + styleText[i]);
-		document.writeln("</style>\n</head>");
-
-		document.writeln("<body bgcolor='#FFFFFF' style='background-image:url(string_methods_quiz_files/header.gif); background-repeat:no-repeat'>");
-		document.writeln("<div style='font-size:12pt; font-family:\"Times New Roman\", \"Times\", serif; color:#000000;'>");
-
-		document.writeln("<b>Name:</b> " + studentName + "<br>");
-		document.write("<b>Score:</b> " + numCorrect + " / " + numPossible +
-				" points (" + scorePercent + "%)");
-		if (numSubjective > 0) {
-			document.write("&nbsp;&nbsp;&nbsp;&nbsp; [" + numSubjective + " open-ended ");
-			if (numSubjective == 1)
-				document.write("question");
-			else
-				document.write("questions");
-			document.write(" not graded]");
-		}
-		document.writeln("</div><br><br>");
-		document.writeln("<div class='title'>" + titleString + "</div><br>");
-		document.writeln("<table align='left' width='100%' border='0' cellpadding='0' cellspacing='0'>");
-
-		currentInstruction = 0;
-		currentNarrative = 0;
-		for (i=0; i < numQuestions; ++i) {
-			if (currentInstruction < numInstructions) {
-				if (instructionIndex[currentInstruction] == i) {
-					document.writeln("<tr><td colspan='3'><br>");
-					document.writeln(instructionText[currentInstruction]);
-					document.writeln("<div class='spacer'>&nbsp;</div>");
-					document.writeln("</td></tr>");
-					++currentInstruction;
-				}
-			}
-
-			if (currentNarrative < numNarratives) {
-				if (narrativeIndex[currentNarrative] == i) {
-					document.writeln("<tr><td></td><td></td><td>");
-					document.writeln(narrativeText[currentNarrative]);
-					document.writeln("<div class='spacer'>&nbsp;</div>");
-					document.writeln("</td></tr>");
-					++currentNarrative;
-				}
-			}
-
-			document.writeln("<tr valign='baseline'>");
-			document.writeln("<td nowrap><p class='default'>" + prefixText[i] + "</p></td>");
-			document.writeln("<td nowrap><p class='qnumber'>&nbsp;" + numberText[i] + "&nbsp;</p></td>");
-			document.writeln("<td width='100%'>" + questionText[i]);
-			document.writeln("<div style='font-size:2pt'></div><br>");
-			document.writeln("<table width='100%' valign='baseline' cellpadding=0 cellspacing=0 border=0>");
-			if (listMap.charAt(i) != "1") {
-				document.writeln("<tr valign='baseline'><td><p class='default'><b>RESPONSE:&nbsp;</b></p></td>");
-				document.writeln("<td width='100%'><p class='default'>" + responseText[i] + "</p></td></tr>");
-			}
-			document.writeln("<tr valign='baseline'><td><p class='default'><b>ANSWER:&nbsp;</b></p></td>");
-			document.writeln("<td width='100%'>" + answerText[i] + "</td></tr>");
-			document.writeln("<tr valign='baseline'><td><p class='default'><b>POINTS:&nbsp;</b></p></td>");
-			document.writeln("<td width='100%'>" + scoreDetails[i] + "</td></tr>");
-			if (showFeedback && feedbackText[i] != null) {
-				document.writeln("<tr valign='baseline'><td><p class='default'><b>FEEDBACK:&nbsp;</b></p></td>");
-				document.writeln("<td width='100%'><p class='default'>" + feedbackText[i] + "</p></td></tr>");
-			}
-			if (showRef) {
-				document.writeln("<tr valign='baseline'><td><p class='default'><b>REF:&nbsp;</b></p></td>");
-				document.writeln("<td width='100%'><p class='default'>" + refText[i] + "</p></td></tr>");
-			}
-			document.writeln("</table>");
-			document.writeln("<div class='spacer'>&nbsp;</div></td></tr>");
-		}
-
-		document.writeln("</table>");
-		document.writeln("<br clear='all'>");
-		document.writeln("<table align='left' width='100%' cellpadding=0 cellspacing=0 border=0>");
-		document.writeln("<tr><td bgcolor='#000000'><div style='font-size:1pt'>&nbsp;</div></td></tr>");
-		document.write("<tr><td valign='top'><a href='" + htmlUrl + "'>");
-		document.writeln("<img src='string_methods_quiz_files/retake.gif' border=0 alt='Retake Test'></a></td>");
-		document.writeln("</tr></table>");
-
-		document.writeln("</body>");
-		document.writeln("</html>");
-		document.close();
-
-		return(false);
-	}
-
-	function BuildPrefixText(answerIndex, responseText, isCorrect)
-	{
-		var	text;
-		var	listIndex;
-
-		text = "<tt>"
-		if (isCorrect)
-			text += "<img src='string_methods_quiz_files/correct.gif' align='middle'>"
-		else
-			text += "<img src='string_methods_quiz_files/wrong.gif' align='middle'>"
-
-		if (listMap.charAt(answerIndex) == "1") {
-			if (responseText.length == 0)
-				responseText = "&nbsp;";
-			text += "&nbsp;<u>&nbsp;" + responseText + "&nbsp;</u>";
-		}
-
-		text += "</tt>"
-		return(text);
-	}
-
-	function TranslateHtmlString(text)
-	{
-		var	newText;
-		var	replaceString;
-		var	position;
-		var	length;
-		var	breakPos;
-		var	skipExtra;
-		var	i;
-
-		newText = "";
-		position = 0;
-		length = text.length;
-		while (position < length) {
-			skipExtra = 0;
-			breakPos = -1;
-			for (i=position; i < length && breakPos < 0; ++i) {
-				switch(text.charAt(i)) {
-					case '>':
-						replaceString = "&gt;";
-						breakPos = i;
-						break;
-					case '<':
-						replaceString = "&lt;";
-						breakPos = i;
-						break;
-					case '&':
-						replaceString = "&amp;";
-						breakPos = i;
-						break;
-					case '\r':
-						if ((i + 1) < length && text.charAt(i + 1) == '\n')
-							skipExtra = 1;
-						replaceString = "<br>";
-						breakPos = i;
-						break;
-					case '\n':
-						replaceString = "<br>";
-						breakPos = i;
-						break;
-					case ' ':
-						if ((i + 1 < length) && text.charAt(i + 1) == ' ') {
-							replaceString = "&nbsp;";
-							breakPos = i;
-						}
-						break;
-				}
-			}
-
-			if (breakPos < 0) {
-				newText += text.substring(position, length);
-				position = length;
-			} else {
-				if (breakPos > position)
-					newText += text.substring(position, breakPos);
-				newText += replaceString;
-				position = breakPos + 1 + skipExtra;
-			}
-		}
-
-		return(newText);
-	}
-
-	function GetFeedback(text, index)
-	{
-		var list = text.split("\t");
-		if (index >= 0 && index < list.length)
-			return(list[index]);
-			
-		return("");
+		return(true);
 	}
 
 	function TranslateAnswer(s, answerIndex)
 	{
-		return(s);
+		var	value;
+		var	newString;
+		var	code;
+		var	i;
+
+		value = (answerIndex % 31) + 1;
+		newString = "";
+		for (i=0; i < s.length; i += 2) {
+			code = parseInt(s.substring(i, i + 2), 16);
+			newString += String.fromCharCode(code ^ value);
+		}
+
+		return(newString);
 	}
 
 	function ScoreAnswer(answerIndex, responseText, pointsPossible)
@@ -500,21 +321,34 @@ if (navigator.appName.indexOf("Netscape") >= 0) {
 }
 // -->
 </script>
-<form name='TestForm' onReset='return(AllowReset())'>
-<table align='left' width='100%' border='0' cellspacing='0'>
-    <tr valign='top'>
-	<td>
-	    <div class='spacer'>&nbsp;</div>
-	    <div class='default'>
-	        <b>Name:</b>&nbsp;<input type='text' name='student_name' size='30'>
-	    </div>
-	    <div class='spacer'>&nbsp;</div>
-	    <br>
-	    <p class="title">String Methods Quiz</p>
-	</td>
-    </tr>
-</table>
-<br clear='all'>
+<form name='TestForm' action='http://score.examview.com/cgi-bin/results.cgi' method='POST'
+	onSubmit='return(HandleSubmit(this))' onReset='return(AllowReset())'>
+<input type='hidden' name='product_version' value='8.1.107.70421'>
+<input type='hidden' name='instructor_name' value='Jesse Linseman'>
+<input type='hidden' name='instructor_formalname' value='Jesse Linseman'>
+<input type='hidden' name='instructor_email' value='jesse.linseman@ocdsb.ca'>
+<input type='hidden' name='instructor_org' value='OCDSB'>
+<input type='hidden' name='instructor_city' value='Ottawa'>
+<input type='hidden' name='instructor_state' value='ON'>
+<input type='hidden' name='test_name' value='String Methods Quiz'>
+<input type='hidden' name='other_label' value='Other'>
+<input type='hidden' name='test_mixed_questions' value='0'>
+<input type='hidden' name='score_correct' value='0'>
+<input type='hidden' name='score_possible' value='0'>
+<input type='hidden' name='score_percent' value='0'>
+<input type='hidden' name='score_subjective' value='0'>
+<input type='hidden' name='score_details' value=''>
+<input type='hidden' name='score_showresults' value='1'>
+<div class='spacer'>&nbsp;</div>
+<div class='default'>
+	<div style='margin-left:1em'>
+	<b>Name:</b>&nbsp;<input type='text' name='student_name' size='30'> &nbsp;&nbsp;
+	<b>ID:</b>&nbsp;<input type='text' name='student_id' size='12'><br>
+	<div class='spacer'>&nbsp;</div>
+	<b>Email:</b>&nbsp;<input type='text' name='student_email' size='45'><br><br>
+	</div>
+</div>
+<div class='title'>String Methods Quiz</div>
 
 <table align='left' width='100%' border='0' cellpadding='0' cellspacing='0'>
 <tr valign='top'>
@@ -540,6 +374,338 @@ class='font2'><br>s.charAt(3)</span></div><div style='font-size:2pt'></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;2.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.substring(5,6)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:2' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;3.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.charAt(4)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:3' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;4.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.indexOf(&#039;m&#039;,4)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:4' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;5.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.substring(1)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:5' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;6.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.substring(1,4)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:6' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;7.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.indexOf(&#039;e&#039;)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:7' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;8.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.indexOf(&#039;a&#039;)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:8' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;9.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.substring(8)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:9' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;10.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.charAt(0)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:10' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;11.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Given the declaration<br><span class='font2'>String s = &quot;Computer
+Science&quot;;<br></span>find the value of each expression.<br><span
+class='font2'><br>s.length()</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:11' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;12.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>State the value of each expression.<br><span
+class='font2'>String.valueOf(2*4)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:12' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;13.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>State the value of each expression.<br><span class='font2'>String.valueOf(3 &lt;
+4 &amp;&amp; 5 &lt; 6)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:13' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;14.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>State the value of each expression.<br><span
+class='font2'>String.valueOf((char)(&#039;A&#039; + 4))</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:14' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;15.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>State the value of each expression.<br><span
+class='font2'>String.valueOf(27%7)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:15' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;16.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>name.toLowerCase().indexOf(&#039;a&#039;)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:16' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;17.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>name.substring(name.indexOf(&#039; &#039;)+1).length()</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:17' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;18.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>name.toUpperCase().indexOf(&#039;A&#039;,5)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:18' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;19.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>name.substring(5,13).toUpperCase()</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:19' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;20.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>name.substring(3).indexOf(&#039;i&#039;)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:20' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;21.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>name.toUpperCase().charAt(5)</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:21' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
+<tr valign='baseline'>
+	<td>
+	</td>
+	<td>
+		<p class='qnumber'>&nbsp;22.&nbsp;</p>
+	</td>
+	<td width='100%'>
+<div class='default'>Assuming that the string <b><span class='font2'>name</span></b> has the value
+&quot;Buckaroo Banzai&quot;, find the value of each expression.<br><span
+class='font2'>String.valueOf((int)name.toUpperCase().substring(4).charAt(0))</span></div><div style='font-size:2pt'></div>
+<div style='font-size:4pt'>&nbsp;</div>
+		<input type='text' name='CO:22' size='60' maxlength='60'><br>
+
+<div class='spacer'>&nbsp;</div>
+	</td>
+</tr>
 </table>
 <br clear='all'>
 <br>
@@ -547,20 +713,14 @@ class='font2'><br>s.charAt(3)</span></div><div style='font-size:2pt'></div>
 <table align='left' width='100%' cellpadding='0' cellspacing='0' border='0'>
 <tr>
     <td bgcolor='#000000'>
-	<div style='font-size:1pt'>&nbsp;</div>
+    <div style='font-size:1pt'>&nbsp;</div>
     </td>
 </tr>
 <tr>
-    <td><a href='javascript:alert("Use the mouse to submit.")'
-	   onMouseOver='window.status = "Check Your Work"; return true'
-	   onMouseOut='window.status = ""; return true'
-	   onFocus='window.status = "Check Your Work"; return true'
-	   onBlur='window.status = ""; return true'
-	   onClick="return(GradeIt(document.forms[0]))">
-	     <img src='string_methods_quiz_files/chkwork.gif' border='0' alt='Check Your Work'></a>
-	&nbsp;&nbsp;&nbsp;
-	<a href='#' onclick='Restart(); return false'>
-	     <img src='string_methods_quiz_files/restart.gif' border='0' alt='Start Over'></a>
+    <td><input type='image' src='string_methods_quiz_files/submit.gif' alt='Grade and Submit'>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<a href='#' onclick='Restart(); return false'><img
+	    src='string_methods_quiz_files/restart.gif' border='0' alt='Start Over'></a>
     </td>
 </tr>
 </table>
